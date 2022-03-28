@@ -15,7 +15,7 @@ public class InMemoryUserService : IUserService
 
     private List<User> users = new()
     {
-        new User("Andrei", "Andrei", "Teacher", "Big bird", 1986),
+        new User("Andrei", "Andrei", "Teacher", "Big bird", 5),
         new User("Maria", "oneTwo3FOUR", "Student", "F1 fan", 2001),
         new User("Anne", "password", "HeadOfDepartment", "Duck lover", 1975)        
     };

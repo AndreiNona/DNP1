@@ -7,6 +7,7 @@ public class User
     public  String role{ get;  set; }
     public  String username{ get;  set; }
     public  int SecurityLevel{ get; set; }
+    public int ID { get; set; }
 
     public User(string accountName, string password)
     {
