@@ -1,8 +1,8 @@
+using Application.DAO;
+using Application.Logic;
 using Blazor.Authentification;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Blazor.Services;
-using Blazor.Services.Impls;
 using Contracts;
 using FileData;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -14,9 +14,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
-builder.Services.AddScoped<IUserService, InMemoryUserService>();
+builder.Services.AddScoped<IUserServe, UserServiceImpl>();
 builder.Services.AddScoped<UserFileContext>();
-builder.Services.AddScoped<IUserServe, UserFileDAO>();
+builder.Services.AddScoped<IUserDAO, UserFileDAO>();
 
 var app = builder.Build();
 

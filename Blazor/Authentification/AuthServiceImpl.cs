@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using System.Text.Json;
-using Blazor.Services;
+using Contracts;
 using Entities;
 using Microsoft.JSInterop;
 
@@ -9,10 +9,10 @@ namespace Blazor.Authentification;
 public class AuthServiceImpl : IAuthService
 {
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!; // assigning to null! to suppress null warning.
-    private readonly IUserService userService;
+    private readonly IUserServe userService;
     private readonly IJSRuntime jsRuntime;
 
-    public AuthServiceImpl(IUserService userService, IJSRuntime jsRuntime)
+    public AuthServiceImpl(IUserServe userService, IJSRuntime jsRuntime)
     {
         this.userService = userService;
         this.jsRuntime = jsRuntime;
@@ -20,7 +20,7 @@ public class AuthServiceImpl : IAuthService
 
     public async Task LoginAsync(string username, string password)
     {
-        User? user = await userService.GetUserAsync(username); // Get user from database
+        User? user = await userService.GetUser(username); // Get user from database
 
         ValidateLoginCredentials(password, user); // Validate input data against data from database
         // validation success

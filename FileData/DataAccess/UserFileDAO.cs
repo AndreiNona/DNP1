@@ -1,9 +1,10 @@
+using Application.DAO;
 using Contracts;
 using Entities;
 
 namespace FileData;
 
-public class UserFileDAO : IUserServe
+public class UserFileDAO : IUserDAO
 {
     
     private UserFileContext fileContext;
@@ -18,9 +19,9 @@ public class UserFileDAO : IUserServe
         ICollection<User> users = fileContext.Users;
         return users;
     }
-    public async Task<User> GetById(int id)
+    public async Task<User> GetUser(string username)
     {
-        return fileContext.Users.First(t => t.ID == id);
+        return  fileContext.Users.First(t => t.accountName==username);
     }
 
     public async Task<User> AddAsync(User user)
