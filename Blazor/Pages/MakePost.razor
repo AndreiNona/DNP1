@@ -1,6 +1,73 @@
 @page "/MakePost"
+@using Entities
+@using Contracts
+@using System.Security.Claims
+@inject IPostService PostService
+@inject IUserService UserService
+@inject NavigationManager NavMgr
 <h3>MakePost</h3>
-
+<EditForm Model="@newPostItem" OnValidSubmit="@AddNewPost">
+    <DataAnnotationsValidator/> 
+    <ValidationSummary/>
+    <div class="box">
+    <div class="form-group">
+        <span>
+            <label>Title</label><br/>
+        </span>
+        <span>
+            <InputTextArea  @bind-Value="newPostItem.title"/>
+        </span>
+    </div>
+        <div class="form-group">
+            <span>
+                <label>Subtitle(a short description):</label><br/>
+            </span>
+            <span>
+                <InputTextArea  @bind-Value="newPostItem.subtitle"/>
+            </span>
+        </div>
+    <div class="form-group">
+        <span>
+            <label>Content:</label><br/>
+        </span>
+        <span>
+            <InputTextArea rows="4" @bind-Value="newPostItem.content"/>
+            
+        </span>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+    </div>
+</EditForm>
+<label>@errorLabel</label>
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+    private ClaimsPrincipal? user;
     
+    private Post newPostItem = new Post();
+    private string errorLabel;
+    
+    private async Task AddNewPost()
+    {
+        errorLabel = "";
+        try
+        {
+            AuthenticationState authState = await AuthState;
+            user = authState.User;
+            Claim userName = user.Claims.First(c => c.Type.Equals("UserName"));
+            User? u = await UserService.GetUser(userName.Value);
+            newPostItem.Owner = u;
+            await PostService.AddAsync(newPostItem);
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+            return;
+        }
+        
+        NavMgr.NavigateTo("/Comunity");
+    }
 }

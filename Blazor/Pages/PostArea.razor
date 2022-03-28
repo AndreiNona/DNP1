@@ -1,0 +1,50 @@
+@page "/PostArea"
+@using Entities
+@using Contracts
+@inject IPostService PostService
+@inject IUserService UserService
+<h3>PostArea</h3>
+
+ @if (posts == null)
+        {
+            <p>
+                <em>Loading...</em>
+            </p>
+        }
+        else if (!posts.Any())
+        {
+            <p>
+                <em>Nobody here, please find some friends.</em>
+            </p>
+        }
+        else
+        {
+    
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th> <th>Subtitle</th> <th>Content</th> <th>Owner</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in posts)
+                {
+                    <tr>
+                        <td>@item.title</td> 
+                        <td>@item.subtitle</td> 
+                        <td>@item.content</td>
+                        <td>@item.Owner</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+@code
+{
+    private ICollection<Post> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostService.GetAsync();
+    }
+}

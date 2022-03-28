@@ -2,7 +2,7 @@ using Entities;
 
 namespace Contracts;
 
-public interface IUserServe
+public interface IUserService
 {
     public Task<ICollection<User>> GetAsync();
     public Task<User> GetUser(string username);

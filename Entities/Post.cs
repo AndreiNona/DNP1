@@ -2,10 +2,15 @@ namespace Entities;
 
 public class Post
 {
-    private String title;
-    private String subtitle;
-    private String content;
-    private User Owner;
+    public String title;
+    public String subtitle;
+    public String content;
+    public User Owner;
+    public int ID { get; set; }
+
+    public Post()
+    {
+    }
 
     public Post(string title, string subtitle, string content, User owner)
     {

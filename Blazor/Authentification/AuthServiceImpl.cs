@@ -9,10 +9,10 @@ namespace Blazor.Authentification;
 public class AuthServiceImpl : IAuthService
 {
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!; // assigning to null! to suppress null warning.
-    private readonly IUserServe userService;
+    private readonly IUserService userService;
     private readonly IJSRuntime jsRuntime;
 
-    public AuthServiceImpl(IUserServe userService, IJSRuntime jsRuntime)
+    public AuthServiceImpl(IUserService userService, IJSRuntime jsRuntime)
     {
         this.userService = userService;
         this.jsRuntime = jsRuntime;

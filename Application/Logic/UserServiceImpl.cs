@@ -4,7 +4,7 @@ using Entities;
 
 namespace Application.Logic;
 
-public class UserServiceImpl : IUserServe
+public class UserServiceImpl : IUserService
 {
     private IUserDAO DAO;
 
