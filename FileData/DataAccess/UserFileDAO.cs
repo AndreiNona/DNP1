@@ -3,7 +3,7 @@ using Entities;
 
 namespace FileData;
 
-public class UserFileDAO : IUserService
+public class UserFileDAO : IUserServe
 {
     
     private UserFileContext fileContext;
@@ -42,6 +42,7 @@ public class UserFileDAO : IUserService
 
     public async Task UpdateAsync(User user)
     {
-
+        User toUpdate = fileContext.Users.First(t => t.ID == user.ID);
+        fileContext.SaveChanges();
     }
 }

@@ -1,25 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Entities;
 
 public class User
 {
     public  String accountName{ get;  set; }
+    [Required, MinLength(5)] 
     public  String password{ get;  set; }
     public  String role{ get;  set; }
+    [Required, MaxLength(128)] 
     public  String username{ get;  set; }
     public  int SecurityLevel{ get; set; }
     public int ID { get; set; }
 
-    public User(string accountName, string password)
-    {
-        this.accountName = accountName;
-        this.password = password;
-    }
 
-    public User(string accountName, string password, int securityLevel)
+    public User()
     {
-        this.accountName = accountName;
-        this.password = password;
-        SecurityLevel = securityLevel;
     }
 
     public User(string accountName, string password, string role, string username, int securityLevel)

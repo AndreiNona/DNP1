@@ -6,7 +6,7 @@ namespace FileData;
 public class UserFileContext
 {
     private string userFilePath = "users.json";
-    private ICollection<User> users;
+    private ICollection<User>? users;
     public ICollection<User> Users
     {
         get
@@ -16,10 +16,8 @@ public class UserFileContext
                 LoadData();
             }
 
-            return users;
+            return users!;
         }
-        //Unusre how this got here
-        set => throw new NotImplementedException();
     }
 
     public UserFileContext()
@@ -34,19 +32,19 @@ public class UserFileContext
     {
         User[] us = {
             new User("Andrei", "Andrei", "Admin", "Aneternums", 5) {
-
+            ID = 1,
             },
             new User("Nemo", "Andrei", "Guest", "Nemo", 1986) {
-
+                ID = 2,
             },
             new User("Duck", "Andrei", "Guest", "Josh", 1986) {
-
+                ID = 3,
             },
             new User("Peseca", "Andrei", "Guest", "F1 fan", 1986) {
-
+                ID = 4,
             },
             new User("Oreo", "Andrei", "Guest", "Cutiepie", 1986) {
-
+                ID = 5,
             },
         };
         users = us.ToList();
@@ -61,6 +59,6 @@ public class UserFileContext
     private void LoadData()
     {
         string content = File.ReadAllText(userFilePath);
-        Users = JsonSerializer.Deserialize<List<User>>(content);
+        users = JsonSerializer.Deserialize<List<User>>(content);
     }
 }

@@ -1,0 +1,58 @@
+@page "/Comunity"
+@using Entities
+@using Contracts
+@inject IUserServe UserServe
+<h3>Comunity</h3>
+
+<AuthorizeView>
+    <Authorized>
+
+        @if (users == null)
+        {
+            <p>
+                <em>Loading...</em>
+            </p>
+        }
+        else if (!users.Any())
+        {
+            <p>
+                <em>Nobody here, please find some friends.</em>
+            </p>
+        }
+        else
+        {
+    
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Account name</th> <th>Username</th> <th>Role</th> <th>Password</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in users)
+                {
+                    <tr>
+                        <td>@item.accountName</td> 
+                        <td>@item.username</td> 
+                        <td>@item.role</td>
+                        <td>@item.password</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </Authorized>
+            <NotAuthorized>
+                <h2>Please Login to see this page</h2>
+            </NotAuthorized>
+</AuthorizeView>
+@code {
+    private ICollection<User> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserServe.GetAsync();
+    }
+
+}

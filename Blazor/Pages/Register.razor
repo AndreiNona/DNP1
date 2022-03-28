@@ -1,0 +1,65 @@
+@page "/Register"
+@using Entities
+@using Blazor.Services
+@using Contracts
+@inject IUserServe UserServe
+@inject NavigationManager NavMgr
+<h3>Register</h3>
+
+<EditForm Model="@newUserItem" OnValidSubmit="@AddNewUser">
+    <DataAnnotationsValidator/> 
+    <ValidationSummary/>
+    <div class="box">
+    <div class="form-group">
+        <span>
+            <label>Account name:</label><br/>
+        </span>
+        <span>
+            <InputTextArea  @bind-Value="newUserItem.accountName"/>
+        </span>
+    </div>
+        <div class="form-group">
+            <span>
+                <label>Username(Will be seen by others):</label><br/>
+            </span>
+            <span>
+                <InputTextArea  @bind-Value="newUserItem.username"/>
+            </span>
+        </div>
+    <div class="form-group">
+        <span>
+            <label>Password:</label><br/>
+        </span>
+        <span>
+            <InputTextArea rows="4" @bind-Value="newUserItem.password"/>
+            
+        </span>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+    </div>
+</EditForm>
+<label>@errorLabel</label>
+@code {
+    private User newUserItem = new User();
+    private string errorLabel;
+    
+    private async Task AddNewUser()
+    {
+        errorLabel = "";
+        try
+        {
+            newUserItem.role = "Guest";
+            newUserItem.SecurityLevel = 1;
+            await UserServe.AddAsync(newUserItem);
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+            return;
+        }
+        
+        NavMgr.NavigateTo("/Comunity");
+    }
+}

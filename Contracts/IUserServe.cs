@@ -2,7 +2,7 @@ using Entities;
 
 namespace Contracts;
 
-public interface IUserService
+public interface IUserServe
 {
     public Task<ICollection<User>> GetAsync();
     public Task<User> GetById(int id);
