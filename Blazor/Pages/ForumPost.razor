@@ -2,20 +2,24 @@
 @using Contracts
 @using Entities
 @inject IPostService PostService
-<h3>ForumPost</h3>
+
 @if (post == null)
 {
     OpenPost();
 }
-
+<PageTitle>@post.title</PageTitle>
 @if (post != null)
 {
-    <div class="container">
-        <h1 class="title">@post.title</h1>
-        <h5 class="author">Sub: @post.subtitle</h5>
-        <p class="text">@post.content</p>
-    </div>
+    <section class="content">
+        <h2>@post.title</h2>
+        <h3>@post.subtitle</h3>
+        <br/>
+        <p>
+            @post.content
+        </p>
+    </section>
 }
+
 @code {
     
     [Parameter]

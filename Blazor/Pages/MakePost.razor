@@ -3,6 +3,7 @@
 @using Contracts
 @inject IPostService PostService
 @inject NavigationManager NavMgr
+<PageTitle>Posting</PageTitle>
 <h3>MakePost</h3>
 
 <EditForm Model="@newPostItem" OnValidSubmit="@AddNewPost">

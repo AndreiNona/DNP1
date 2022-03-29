@@ -13,4 +13,10 @@
       <ProjectReference Include="..\FileData\FileData.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Pages\Index.razor.js">
+        <DependentUpon>Index.razor</DependentUpon>
+      </None>
+    </ItemGroup>
+
 </Project>

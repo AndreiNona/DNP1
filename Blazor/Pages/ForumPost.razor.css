@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+section.content {
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: Consolas, serif;
+}
+section.content h2 {
+    margin:0;
+    padding:0;
+    font-size: 4em;
+}
+section.content p  {
+    font-size: 1.2em;
+}
