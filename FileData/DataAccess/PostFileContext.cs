@@ -32,10 +32,10 @@ public class PostFileContext
     private void Seed()
     {
         Post[] po = {
-            new Post("Ducks are cool", "Ducks are the most amazing thing to ever happen", "Quack", new User() ) {
+            new Post("Ducks are cool", "Ducks are the most amazing thing to ever happen", "Quack" ) {
                 ID = 1,
             },
-            new Post("F1", "F2 bad F1 best", "Vrummmm", new User() ) {
+            new Post("F1", "F2 bad F1 best", "Vrummmm") {
                 ID = 2,
             },
         };

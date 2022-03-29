@@ -3,8 +3,8 @@
 @using Contracts
 @inject IPostService PostService
 @inject IUserService UserService
-<h3>PostArea</h3>
-
+@inject NavigationManager NavMgr
+<nav>
  @if (posts == null)
         {
             <p>
@@ -14,37 +14,53 @@
         else if (!posts.Any())
         {
             <p>
-                <em>Nobody here, please find some friends.</em>
+                <em>No posts to display.</em>
             </p>
         }
         else
         {
-    
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Title</th> <th>Subtitle</th> <th>Content</th> <th>Owner</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in posts)
+            int cont = 0;
+            foreach (var item in posts)
+            {
+                //Temp Fix...Unable to add css from code(without a lot of corner cutting)
+                cont++;
+                if (cont == 20)
                 {
-                    <tr>
-                        <td>@item.title</td> 
-                        <td>@item.subtitle</td> 
-                        <td>@item.content</td>
-                        <td>@item.Owner</td>
-                    </tr>
+                    break;
                 }
-                </tbody>
-            </table>
+
+                
+                    <ul>
+                        <p class="box">
+                            <span>@item.title</span>
+                            <br/>
+                            <strong class="subtitle">@item.subtitle</strong>
+                            <br/>
+                            <strong class="content">@item.content</strong>
+                            <button @onclick="()=>OpenPost(item.ID)">&gt;</button>
+                        </p>
+                    </ul>
+
+
+    
+            
+            }
+            
         }
+ 
+            </nav>
 @code
 {
+    
     private ICollection<Post> posts;
 
+    
     protected override async Task OnInitializedAsync()
     {
         posts = await PostService.GetAsync();
+    }
+    private void OpenPost(int id)
+    {
+        NavMgr.NavigateTo($"/ForumPost/{id}");
     }
 }
