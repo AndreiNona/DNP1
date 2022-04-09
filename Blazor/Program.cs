@@ -4,8 +4,8 @@ using Blazor.Authentification;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Contracts;
-using FileData;
 using Microsoft.AspNetCore.Components.Authorization;
+using RESTClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +14,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
-builder.Services.AddScoped<IUserService, UserServiceImpl>();
-builder.Services.AddScoped<UserFileContext>();
-builder.Services.AddScoped<IUserDAO, UserFileDAO>();
-builder.Services.AddScoped<IPostService, PostServiceImpl>();
-builder.Services.AddScoped<PostFileContext>();
-builder.Services.AddScoped<IPostDAO, PostFileDAO>();
-
+builder.Services.AddScoped<IUserService, UserHttpClientImpl>();
+builder.Services.AddScoped<IPostService, PostHttpClientImpl>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

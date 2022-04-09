@@ -14,18 +14,33 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
-    
+    [HttpGet]
+    [Route("users")]
+    public async Task<ActionResult<User>> GetAllUsers()
+    {
+        try
+        {
+            ICollection<User> users = await _userService.GetAsync();
+            return Ok(users);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
     [HttpGet]
     [Route("{username}")]
     public async Task<ActionResult<User>> GetUser([FromRoute] string username)
     {
         try
         {
+            Console.WriteLine("Searching for user: "+username);
             User u = await _userService.GetUser(username);
             return Ok(u);
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
     }

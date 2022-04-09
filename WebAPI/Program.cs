@@ -13,10 +13,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserServiceImpl>();
 builder.Services.AddScoped<IPostService, PostServiceImpl>();
-builder.Services.AddScoped<IPostDAO, PostFileDAO>();
 builder.Services.AddScoped<IUserDAO, UserFileDAO>();
 builder.Services.AddScoped<UserFileContext>();
+builder.Services.AddScoped<IPostDAO, PostFileDAO>();
 builder.Services.AddScoped<PostFileContext>();
+
 
 var app = builder.Build();
 

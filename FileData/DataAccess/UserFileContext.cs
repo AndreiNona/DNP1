@@ -50,10 +50,14 @@ public class UserFileContext
         users = us.ToList();
         SaveChanges();
     }
-    public void SaveChanges()
+    public async void SaveChanges()
     {
-        string serialize = JsonSerializer.Serialize(Users);
-        File.WriteAllText(userFilePath,serialize);
+        string serialize = JsonSerializer.Serialize(Users, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = false
+        });
+        await File.WriteAllTextAsync(userFilePath,serialize);
         users = null;
     }
     private void LoadData()
