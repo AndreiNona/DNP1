@@ -43,6 +43,9 @@ public class PostFileDAO : IPostDAO
     public async Task UpdateAsync(Post post)
     {
         Post toUpdate = fileContext.Posts.First(t => t.ID == post.ID);
-        fileContext.SaveChanges();
+        toUpdate.title = post.title;
+        toUpdate.subtitle = post.subtitle;
+        toUpdate.content = post.content;
+        await fileContext.SaveChanges();
     }
 }

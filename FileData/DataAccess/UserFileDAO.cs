@@ -24,14 +24,17 @@ public class UserFileDAO : IUserDAO
         return  fileContext.Users.First(t => t.accountName==username);
     }
 
-    public async Task<User> AddAsync(User user)
+    public async Task AddUserAsync(User user)
     {
+        if (fileContext.Users.Contains(user))
+        {
+            throw new Exception("Username already in use. Pleas try another one");
+        }
         int largestId = fileContext.Users.Max(t => t.ID);
         int nextId = largestId + 1;
         user.ID = nextId;
         fileContext.Users.Add(user);
         fileContext.SaveChanges();
-        return user;
     }
 
     public async Task DeleteAsync(int id)

@@ -42,10 +42,15 @@ public class PostFileContext
         posts = po.ToList();
         SaveChanges();
     }
-    public void SaveChanges()
+    public async Task SaveChanges()
     {
-        string serialize = JsonSerializer.Serialize(Posts);
-        File.WriteAllText(postFilePath,serialize);
+        string serialize = JsonSerializer.Serialize(Posts, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = false
+        });
+        
+          await File.WriteAllTextAsync(postFilePath,serialize);
         posts = null;
     }
     private void LoadData()

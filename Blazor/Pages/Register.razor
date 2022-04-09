@@ -52,7 +52,7 @@
         {
             newUserItem.role = "Guest";
             newUserItem.SecurityLevel = 1;
-            await UserService.AddAsync(newUserItem);
+            await UserService.AddUserAsync(newUserItem);
         }
         catch (Exception e)
         {
