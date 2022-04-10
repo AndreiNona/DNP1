@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using Contracts;
 using Entities;
@@ -24,23 +25,78 @@ public class PostHttpClientImpl : IPostService
         return posts;
     }
 
-    public Task<Post> GetPost(int id)
+    public async Task<Post> GetPost(int id)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/Post/{id}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+
+        Post post = JsonSerializer.Deserialize<Post>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        Console.WriteLine("GetPost returned: " + post.title); //Console line
+        return post;
     }
 
-    public Task<Post> AddAsync(Post post)
+    public async Task AddPostAsync(Post post)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        
+        string postAsJson = JsonSerializer.Serialize(post);
+        StringContent postcontent = new(postAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await client.PostAsync($"https://localhost:7211/Post/Add",postcontent);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+        User returned = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        Console.WriteLine("AddUserAsync returned: " + returned); //Console line
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/Post/{id}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
     }
 
-    public Task UpdateAsync(Post post)
+    public async Task UpdateAsync(Post post)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        
+        string UserAsJson = JsonSerializer.Serialize(post);
+        StringContent postcontent = new(UserAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await client.PostAsync($"https://localhost:7211/Post/update/",postcontent);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+        Post returned = JsonSerializer.Deserialize<Post>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        Console.WriteLine("UpdateAsync returned: " + returned); //Console line
     }
 }

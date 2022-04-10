@@ -46,11 +46,12 @@ public class PostController : ControllerBase
     }
     
     [HttpPost]
+    [Route("Add")]
     public async Task<ActionResult<Post>> CreatePost([FromBody] Post post)
     {
         try
         {
-            await _postService.AddAsync(post);
+            await _postService.AddPostAsync(post);
             return Created($"/posts/{post.ID}",post);
 
         }
@@ -59,9 +60,22 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
-    [HttpPatch]
+    [HttpDelete]
     [Route("{id:int}")]
+    public async Task<ActionResult<String>> DeleteUser([FromRoute] int id)
+    {
+        try
+        {
+            await _postService.DeleteAsync(id);
+            return Ok("Post " + id + " successfully deleted");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    [HttpPatch]
+    [Route("update")]
     public async Task<ActionResult<String>> UpdatePost([FromBody] Post post)
     {
         try

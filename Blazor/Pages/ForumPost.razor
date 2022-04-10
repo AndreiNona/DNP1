@@ -5,39 +5,43 @@
 
 @if (post == null)
 {
-    OpenPost();
+    <p>
+        <em>Loading...</em>
+    </p>
 }
-<PageTitle>@post.title</PageTitle>
-@if (post != null)
+else
 {
-    <section class="content">
-        <h2>@post.title</h2>
-        <h3>@post.subtitle</h3>
-        <br/>
+    @if (post != null)
+    {
+        <PageTitle>@post.title</PageTitle>
+        <section class="content">
+            <h2>@post.title</h2>
+            <h3>@post.subtitle</h3>
+            <br/>
+            <p>
+                @post.content
+            </p>
+        </section>
+    }
+    else
+    {
         <p>
-            @post.content
+            <em>No posts to display.</em>
         </p>
-    </section>
+    }
 }
+
+
 
 @code {
     
     [Parameter]
     public int index { get; set; }
-
-    private Post post;
-
-    private async void OpenPost()
+    
+    Post post = null;
+    protected override async Task OnInitializedAsync()
     {
-        ICollection<Post> posts = null;
-        posts = await PostService.GetAsync();
-
-        foreach (var item in posts)
-        {
-            if (item.ID == index)
-            {
-                post = item;
-            }
-        }
+        post = await PostService.GetPost(index);
     }
+    
 }

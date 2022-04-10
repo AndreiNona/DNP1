@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using Contracts;
 using Entities;
@@ -9,7 +10,7 @@ public class UserHttpClientImpl : IUserService
     public async Task<ICollection<User>> GetAsync()
     {
         using HttpClient client = new ();
-        HttpResponseMessage response = await client.GetAsync("https://localhost:7211/User/users");
+        HttpResponseMessage response = await client.GetAsync("https://localhost:7211/User");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -42,18 +43,61 @@ public class UserHttpClientImpl : IUserService
         return user;
     }
 
-    public Task AddUserAsync(User user)
+    public async Task AddUserAsync(User user)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        
+        string UserAsJson = JsonSerializer.Serialize(user);
+        StringContent usercontent = new(UserAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await client.PostAsync($"https://localhost:7211/User/Add",usercontent);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+        User returned = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        Console.WriteLine("AddUserAsync returned: " + returned); //Console line
+        
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/User/{id}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+        
     }
 
-    public Task UpdateAsync(User user)
+    public async Task UpdateAsync(User user)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        
+        string UserAsJson = JsonSerializer.Serialize(user);
+        StringContent usercontent = new(UserAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await client.PostAsync($"https://localhost:7211/User/update",usercontent);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+        User returned = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        Console.WriteLine("UpdateAsync returned: " + returned); //Console line
     }
 }

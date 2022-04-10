@@ -47,6 +47,11 @@ public class UserFileDAO : IUserDAO
     public async Task UpdateAsync(User user)
     {
         User toUpdate = fileContext.Users.First(t => t.ID == user.ID);
+        toUpdate.username = user.username;
+        toUpdate.role = user.role;
+        toUpdate.accountName = user.accountName;
+        toUpdate.password = user.password;
+        toUpdate.SecurityLevel = user.SecurityLevel;
         fileContext.SaveChanges();
     }
 }
