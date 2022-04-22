@@ -23,14 +23,13 @@ public class PostFileDAO : IPostDAO
         return  fileContext.Posts.First(t => t.ID == id);
     }
 
-    public async Task<Post> AddAsync(Post post)
+    public async Task AddPostAsync(Post post)
     {
         int largestId = fileContext.Posts.Max(t => t.ID);
         int nextId = largestId + 1;
         post.ID = nextId;
         fileContext.Posts.Add(post);
         fileContext.SaveChanges();
-        return post;
     }
 
     public async Task DeleteAsync(int id)

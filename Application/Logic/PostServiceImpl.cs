@@ -26,7 +26,7 @@ public class PostServiceImpl : IPostService
 
     public async Task AddPostAsync(Post post)
     {
-        await DAO.AddAsync(post);
+        await DAO.AddPostAsync(post);
        
     }
 

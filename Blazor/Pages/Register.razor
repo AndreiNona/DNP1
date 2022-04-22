@@ -5,7 +5,19 @@
 @inject NavigationManager NavMgr
 <PageTitle>Register</PageTitle>
 <h3>Register</h3>
-
+<div class='tabs'>
+	
+    <div class="section section-1" id='tab-1'>
+    	<div class="container-1"></div>
+		<div class="background-color-1">
+		<div class="shape-1"></div>
+		<div class="shape-2"></div>
+		<div class="shape-3"></div>
+		<div class="shape-4"></div>
+		<div class="shape-5"></div>
+		<div class="shape-6"></div>
+	</div>
+    </div></div>
 <EditForm Model="@newUserItem" OnValidSubmit="@AddNewUser">
     <DataAnnotationsValidator/> 
     <ValidationSummary/>
@@ -36,7 +48,7 @@
         </span>
     </div>
     <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Create</button>
+        <button class="button" type="submit"><span>Create</span></button>
     </p>
     </div>
 </EditForm>

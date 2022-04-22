@@ -7,15 +7,16 @@
 <div class="page">
     <div class="sidebar">
         <NavMenu/>
+        <AuthorizeView>
+            <Authorized>
+                <div class="navi" @onclick="() => Logout()">
+                    <span class="oi oi-lock-locked" aria-hidden="true"></span> Logout
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </div>
 
     <main>
-        <div class="top-row px-4">
-<AuthorizeView>
-    <a @onclick="() => Logout()">Logout</a>
-</AuthorizeView>
-        </div>
-
         <article class="content px-4">
             @Body
         </article>

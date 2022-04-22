@@ -58,12 +58,12 @@ public class PostHttpClientImpl : IPostService
         {
             throw new Exception($"Error: {response.StatusCode}, {content}");
         }
-        User returned = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
+        Post returned = JsonSerializer.Deserialize<Post>(content, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
         
-        Console.WriteLine("AddUserAsync returned: " + returned); //Console line
+        Console.WriteLine("AddPostAsync returned: " + returned); //Console line
     }
 
     public async Task DeleteAsync(int id)
@@ -82,8 +82,8 @@ public class PostHttpClientImpl : IPostService
     {
         using HttpClient client = new ();
         
-        string UserAsJson = JsonSerializer.Serialize(post);
-        StringContent postcontent = new(UserAsJson, Encoding.UTF8, "application/json");
+        string PostAsJson = JsonSerializer.Serialize(post);
+        StringContent postcontent = new(PostAsJson, Encoding.UTF8, "application/json");
         
         HttpResponseMessage response = await client.PostAsync($"https://localhost:7211/Post/update/",postcontent);
         string content = await response.Content.ReadAsStringAsync();
