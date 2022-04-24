@@ -22,6 +22,7 @@ public class UserHttpClientImpl : IUserService
         {
             PropertyNameCaseInsensitive = true
         })!;
+        Console.WriteLine("GetUser returned: " + users); //Console line
         return users;
     }
 
@@ -40,6 +41,7 @@ public class UserHttpClientImpl : IUserService
         {
             PropertyNameCaseInsensitive = true
         })!;
+        Console.WriteLine("GetUser returned: " + user); //Console line
         return user;
     }
 
@@ -76,7 +78,6 @@ public class UserHttpClientImpl : IUserService
         {
             throw new Exception($"Error: {response.StatusCode}, {content}");
         }
-        
     }
 
     public async Task UpdateAsync(User user)
