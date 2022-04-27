@@ -1,7 +1,13 @@
 using Application.DAO;
 using Application.Logic;
 using Contracts;
+using EfcData;
 using FileData;
+
+using (PostContext ctx = new())
+{
+    ctx.Seed();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +21,10 @@ builder.Services.AddScoped<IUserService, UserServiceImpl>();
 builder.Services.AddScoped<IPostService, PostServiceImpl>();
 builder.Services.AddScoped<IUserDAO, UserFileDAO>();
 builder.Services.AddScoped<UserFileContext>();
-builder.Services.AddScoped<IPostDAO, PostFileDAO>();
-builder.Services.AddScoped<PostFileContext>();
+builder.Services.AddScoped<IPostDAO, PostSqliteDAO>();
+builder.Services.AddDbContext<PostContext>();
+//builder.Services.AddScoped<IPostDAO, PostFileDAO>();
+//builder.Services.AddScoped<PostFileContext>();
 
 
 var app = builder.Build();
