@@ -28,15 +28,32 @@ public class UserController : ControllerBase
         }
     }
     
-    //TODO: Make method to return user via ID
+
     [HttpGet]
-    [Route("{username}")]
-    public async Task<ActionResult<User>> GetUser([FromRoute] string username)
+    [Route("{accountName}")]
+    public async Task<ActionResult<User>> GetUserByUsername([FromRoute] string accountName)
     {
         try
         {
-            Console.WriteLine("Searching for user: "+username); //Console line
-            User u = await _userService.GetUser(username);
+            Console.WriteLine("Searching for user: "+accountName); //Console line
+            User u = await _userService.GetUserByUsername(accountName);
+            return Ok(u);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e); //Console line
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("{id}/ID")]
+    public async Task<ActionResult<User>> GetUserById([FromRoute] int id)
+    {
+        try
+        {
+            Console.WriteLine("Searching for user: "+id); //Console line
+            User u = await _userService.GetUserById(id);
             return Ok(u);
         }
         catch (Exception e)
@@ -82,7 +99,7 @@ public class UserController : ControllerBase
         try
         {
             await _userService.UpdateAsync(u);
-            return Ok("User " + u.ID + " successfully updated");
+            return Ok("User " + u.id + " successfully updated");
         }
         catch (Exception e)
         {

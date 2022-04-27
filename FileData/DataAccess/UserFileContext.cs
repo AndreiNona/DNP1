@@ -32,19 +32,19 @@ public class UserFileContext
     {
         User[] us = {
             new User("Andrei", "Andrei", "Admin", "Aneternums", 5) {
-            ID = 1,
+            id = 1,
             },
             new User("Nemo", "Andrei", "Guest", "Nemo", 1986) {
-                ID = 2,
+                id = 2,
             },
             new User("Duck", "Andrei", "Guest", "Josh", 1986) {
-                ID = 3,
+                id = 3,
             },
             new User("Peseca", "Andrei", "Guest", "F1 fan", 1986) {
-                ID = 4,
+                id = 4,
             },
             new User("Oreo", "Andrei", "Guest", "Cutiepie", 1986) {
-                ID = 5,
+                id = 5,
             },
         };
         users = us.ToList();

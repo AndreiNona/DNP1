@@ -1,7 +1,8 @@
-@page "/Comunity"
+@page "/Community"
 @using Entities
 @using Contracts
 @inject IUserService UserServe
+@inject NavigationManager NavMgr
 <PageTitle>Comunity</PageTitle>
 <h3>Comunity</h3>
 
@@ -26,17 +27,19 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Account name</th> <th>Username</th> <th>Role</th> <th>Password</th>
+                    <th>Account name</th> <th>Username</th> <th>Role</th> <th>Password</th> <th>ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in users)
+                @foreach (User u in users)
                 {
                     <tr>
-                        <td>@item.accountName</td> 
-                        <td>@item.username</td> 
-                        <td>@item.role</td>
-                        <td>@item.password</td>
+                        <td>@u.accountName</td> 
+                        <td>@u.username</td> 
+                        <td>@u.role</td>
+                        <td>@u.password</td>
+                        <td id="UserID">@u.id</td>
+                        <!--<td><button @onclick="()=>RemoveUser(u.id)">X</button></td>-->
                     </tr>
                 }
                 </tbody>
@@ -49,11 +52,17 @@
             </NotAuthorized>
 </AuthorizeView>
 @code {
+    
     private ICollection<User> users;
 
     protected override async Task OnInitializedAsync()
     {
         users = await UserServe.GetAsync();
     }
-
+    private void RemoveUser(int id)
+    {
+        Console.WriteLine("Deleting user with id "+id);
+        UserServe.DeleteAsync(id);
+        NavMgr.NavigateTo($"/Community");
+    }
 }

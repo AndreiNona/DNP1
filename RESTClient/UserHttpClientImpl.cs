@@ -26,10 +26,29 @@ public class UserHttpClientImpl : IUserService
         return users;
     }
 
-    public async Task<User> GetUser(string username)
+    public async Task<User> GetUserByUsername(string accountName)
     {
         using HttpClient client = new ();
-        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/User/{username}");
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/User/{accountName}");
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+
+        User user = JsonSerializer.Deserialize<User>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        Console.WriteLine("GetUser returned: " + user); //Console line
+        return user;
+    }
+
+    public async Task<User> GetUserById(int id)
+    {
+        using HttpClient client = new ();
+        HttpResponseMessage response = await client.GetAsync($"https://localhost:7211/User/{id}/ID");
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

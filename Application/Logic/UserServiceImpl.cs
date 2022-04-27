@@ -19,9 +19,14 @@ public class UserServiceImpl : IUserService
     }
     
 
-    public async Task<User> GetUser(string username)
+    public async Task<User> GetUserByUsername(string accountName)
     {
-        return await DAO.GetUser(username);
+        return await DAO.GetUserByUsername(accountName);
+    }
+
+    public async Task<User> GetUserById(int id)
+    {
+        return await DAO.GetUserById(id);
     }
 
     public async Task AddUserAsync(User user)

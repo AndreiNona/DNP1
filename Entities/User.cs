@@ -11,7 +11,7 @@ public class User
     [Required, MaxLength(128)] 
     public  String username{ get;  set; }
     public  int SecurityLevel{ get; set; }
-    public int ID { get; set; }
+    public int id { get; set; }
 
 
     public User()

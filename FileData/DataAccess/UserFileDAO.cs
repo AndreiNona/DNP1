@@ -19,9 +19,14 @@ public class UserFileDAO : IUserDAO
         ICollection<User> users = fileContext.Users;
         return users;
     }
-    public async Task<User> GetUser(string username)
+    public async Task<User> GetUserByUsername(string accountName)
     {
-        return  fileContext.Users.First(t => t.accountName==username);
+        return  fileContext.Users.First(t => t.accountName==accountName);
+    }
+
+    public async Task<User> GetUserById(int id)
+    {
+        return  fileContext.Users.First(t => t.id==id);
     }
 
     public async Task AddUserAsync(User user)
@@ -30,23 +35,23 @@ public class UserFileDAO : IUserDAO
         {
             throw new Exception("Username already in use. Pleas try another one");
         }
-        int largestId = fileContext.Users.Max(t => t.ID);
+        int largestId = fileContext.Users.Max(t => t.id);
         int nextId = largestId + 1;
-        user.ID = nextId;
+        user.id = nextId;
         fileContext.Users.Add(user);
         fileContext.SaveChanges();
     }
 
     public async Task DeleteAsync(int id)
     {
-        User toDelete = fileContext.Users.First(t => t.ID == id);
+        User toDelete = fileContext.Users.First(t => t.id == id);
         fileContext.Users.Remove(toDelete);
         fileContext.SaveChanges();
     }
 
     public async Task UpdateAsync(User user)
     {
-        User toUpdate = fileContext.Users.First(t => t.ID == user.ID);
+        User toUpdate = fileContext.Users.First(t => t.id == user.id);
         toUpdate.username = user.username;
         toUpdate.role = user.role;
         toUpdate.accountName = user.accountName;
