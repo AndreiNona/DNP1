@@ -8,9 +8,9 @@ namespace EfcData;
 
 public class PostSqliteDAO : IPostDAO
 {
-    private readonly PostContext context;
+    private readonly UserContext context;
     
-    public PostSqliteDAO(PostContext context)
+    public PostSqliteDAO(UserContext context)
     {
         this.context = context;
     }

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EfcData.Migrations
+namespace EfcData.Migrations.User
 {
-    [DbContext(typeof(PostContext))]
-    [Migration("20220427075000_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(UserContext))]
+    [Migration("20220503123320_databaseDoneRight")]
+    partial class databaseDoneRight
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,37 @@ namespace EfcData.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Entities.User", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SecurityLevel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("accountName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

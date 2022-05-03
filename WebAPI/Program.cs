@@ -4,10 +4,7 @@ using Contracts;
 using EfcData;
 //using FileData;
 
-using (PostContext ctx = new())
-{
-    ctx.Seed();
-}
+
 using (UserContext ctx = new())
 {
     ctx.Seed();
@@ -29,7 +26,6 @@ builder.Services.AddScoped<IPostService, PostServiceImpl>();
 builder.Services.AddScoped<IUserDAO, UserSqliteDAO>();
 builder.Services.AddScoped<UserContext>();
 builder.Services.AddScoped<IPostDAO, PostSqliteDAO>();
-builder.Services.AddDbContext<PostContext>();
 //builder.Services.AddScoped<IPostDAO, PostFileDAO>();
 //builder.Services.AddScoped<PostFileContext>();
 

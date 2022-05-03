@@ -16,9 +16,35 @@ namespace EfcData.Migrations.User
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0-preview.3.22175.1");
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Entities.Post", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("content")
+                        .IsRequired()
+                        .HasMaxLength(6000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("subtitle")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Entities.User", b =>
+                {
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -42,7 +68,7 @@ namespace EfcData.Migrations.User
                         .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ID");
+                    b.HasKey("id");
 
                     b.ToTable("Users");
                 });
